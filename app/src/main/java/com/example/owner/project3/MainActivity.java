@@ -3,6 +3,7 @@ package com.example.owner.project3;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,13 +13,15 @@ public class MainActivity extends AppCompatActivity {
     JSONArray jsonArray;
     int numberentries = -1;
     int currententry = -1;
+    TextView tvUse;
+    private final static int SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING = 2;
     // eventually have to make MYURL the URL in the XML
     private static final String MYURL = "http://www.pcs.cnu.edu/~kperkins/pets/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        tvUse = (TextView)findViewById(R.id.tvUse);
         ConnectivityCheck myCheck = new ConnectivityCheck(this);
         if (myCheck.isNetworkReachable() || myCheck.isWifiReachable()) {
 
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
             // //////////////////////////////////////////////////// demo this
             // telescoping initilization pattern
-            myTask.setnameValuePair("screen_name", "maddow").setnameValuePair("day", "today");
+            //myTask.setnameValuePair("screen_name", "maddow").setnameValuePair("day", "today");
             // myTask.execute(TWITTER_RACHEL);
 
             myTask.execute(MYURL);
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             //*********************************
             //makes JSON indented, easier to read
             //Log.d(TAG,jsonobject.toString(SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING));
-            //tvRaw.setText(jsonobject.toString(SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING));
+            tvUse.setText(jsonobject.toString(SPACES_TO_INDENT_FOR_EACH_LEVEL_OF_NESTING));
 
             // you must know what the data format is, a bit brittle
             jsonArray = jsonobject.getJSONArray("people");
